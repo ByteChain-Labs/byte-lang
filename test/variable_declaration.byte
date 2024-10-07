@@ -1,0 +1,19 @@
+// String declaration
+let name: string = "John";
+print(`${name}`); // expect John
+
+// Number declaration
+// uint
+let mut num1: uint = 10;
+num1 = num1 + 2;
+print(num1); //expect 12
+
+// int
+let num2: int = -5;
+num2 = num2 + 1;
+print(num2); //expect assignment error trying to change an unmutable variable
+
+//float
+let num3: float = 3.142;
+print(num3); //expect 3.142
+
