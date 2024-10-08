@@ -1,4 +1,4 @@
-enum TokenType {
+pub enum TokenType {
     // Keywords
     STRUCT, CONTRACT,
     PUBLIC, PRIVATE, PROTECTED,
