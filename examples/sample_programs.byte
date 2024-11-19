@@ -19,8 +19,8 @@ print(area); // should print 4 * Maths.pi, if Maths.pi is 3.14 area is 12.56
 
 public struct User {
     // Properties are automatically public or private based on the struct's access level
-    public string username;
-    private string activeEmail;
+    public username: string;
+    private activeEmail: string;
 
     // Constructor to initialize the User with a username and email
     public func new(string uname, string email): User {
@@ -32,17 +32,17 @@ public struct User {
 
     // Getter for the active email
     public func getActiveEmail(): string {
-        return this.activeEmail;
+        return self.activeEmail;
     }
 
     // Setter for the active email
     public func setActiveEmail(string email): void {
-        this.activeEmail = email;
+        self.activeEmail = email;
     }
 
     // Method to display user information
     public func displayUserInfo(): void {
-        print("Username: " + this.username + ", Email: " + this.activeEmail);
+        print(`Username: {self.username}, Email: {self.activeEmail}`);
     }
 }
 
