@@ -36,18 +36,18 @@ public struct User {
     }
 
     // Setter for the active email
-    public func setActiveEmail(string email): void {
+    public func setActiveEmail(string email): nil {
         self.activeEmail = email;
     }
 
     // Method to display user information
-    public func displayUserInfo(): void {
+    public func displayUserInfo(): nil {
         print(`Username: {self.username}, Email: {self.activeEmail}`);
     }
 }
 
 // Example of creating a User and using the methods
-func main(): void {
+func main(): nil {
     let user = User.new("johnDoe", "john@example.com");
     user.displayUserInfo();
     user.setActiveEmail("newemail@example.com");
