@@ -12,3 +12,44 @@ func calc_circle_area(radius: uint): float {
 let area = calc_circle_area(2); 
 
 print(area); // should print 4 * Maths.pi, if Maths.pi is 3.14 area is 12.56
+
+
+
+// A public struct for User
+
+public struct User {
+    // Properties are automatically public or private based on the struct's access level
+    public string username;
+    private string activeEmail;
+
+    // Constructor to initialize the User with a username and email
+    public func new(string uname, string email): User {
+        return User {
+            username: uname,
+            activeEmail: email
+        };
+    }
+
+    // Getter for the active email
+    public func getActiveEmail(): string {
+        return this.activeEmail;
+    }
+
+    // Setter for the active email
+    public func setActiveEmail(string email): void {
+        this.activeEmail = email;
+    }
+
+    // Method to display user information
+    public func displayUserInfo(): void {
+        print("Username: " + this.username + ", Email: " + this.activeEmail);
+    }
+}
+
+// Example of creating a User and using the methods
+func main(): void {
+    let user = User.new("johnDoe", "john@example.com");
+    user.displayUserInfo();
+    user.setActiveEmail("newemail@example.com");
+    user.displayUserInfo();
+}
