@@ -16,5 +16,8 @@ fn main() {
             let binary = bingen::generate_binary(ast);
             write_to_file(binary, "output.bin");
         }
+        _ => {
+            eprintln!("Invalid output flag. Use -bc for bytecode or -bin for binary.");
+        }
     }
 }
