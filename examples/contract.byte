@@ -1,0 +1,11 @@
+contract Token {
+    props {
+        total_supply: unit;
+    }
+
+    func new (total_supply): Self {
+        Token {
+            total_supply: total_supply;
+        }
+    }
+}

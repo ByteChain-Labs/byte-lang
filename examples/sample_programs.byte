@@ -1,0 +1,14 @@
+import "std.math" as Maths;
+
+//Some sample programs
+
+func calc_circle_area(radius: uint): float {
+    let radius_squ = radius * radius;
+    let area: float = Maths.pi * radius_squ;
+
+    return area;
+}
+
+let area = calc_circle_area(2); 
+
+print(area); // should print 4 * Maths.pi, if Maths.pi is 3.14 area is 12.56
