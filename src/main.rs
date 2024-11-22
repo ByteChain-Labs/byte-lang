@@ -1,23 +1,21 @@
-mod compiler;
-mod utils;
-use compiler::{ bcgen, bingen, bytec };
-use utils::{ parse_args, parse_source_file };
+mod lexer;
+
+use lexer::scanner::Scanner;
 
 fn main() {
-    let args = parse_args();
-    let ast = parse_source_file(args.source_file);
+    let source = "
+        const x = 10;
+        if (x > 5) {
+            print(x);
+        } else {
+            print(1);
+        }
+    ".to_string();
 
-    match args.output_flag.as_str() {
-        "-bc" => {
-            let bytecode = bcgen::generate_bytecode(ast);
-            write_to_file(bytecode, "output.byc");
-        }
-        "-bin" => {
-            let binary = bingen::generate_binary(ast);
-            write_to_file(binary, "output.bin");
-        }
-        _ => {
-            eprintln!("Invalid output flag. Use -bc for bytecode or -bin for binary.");
-        }
+    let mut scanner = Scanner::new(source);
+    let tokens = scanner.scan_tokens();
+
+    for token in tokens {
+        println!("{:?}", token);
     }
 }
