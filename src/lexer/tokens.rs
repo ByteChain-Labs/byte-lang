@@ -18,5 +18,26 @@ pub enum TokenType {
     AND, CLASS, CONTRACT, ELSE, FALSE, FUNC, FOR, IF, NIL, OR,
     PRINT, RETURN, SUPER, SELF, TRUE, LET, CONST, WHILE,
 
-    EOF
+    EOF //End Of File
+}
+
+
+#[derive(Debug, Clone)]
+
+pub struct Token {
+    pub token_type: TokenType,
+    pub lexeme: String,
+    pub line: usize,
+    pub literal: Option<String>,
+}
+
+impl Token {
+    pub fn new(token_type: TokenType, lexeme: String, line: usize, literal: Option<String>) -> Self {
+        Self {
+            token_type,
+            lexeme,
+            line,
+            literal,
+        }
+    }
 }
