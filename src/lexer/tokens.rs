@@ -2,21 +2,21 @@
 
 pub enum TokenType {
     // Single-character tokens.
-    LPAREN, RPAREN, LBRACE, RBRACE,
-    COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+    LParen, RParen, LBrace, RBrace,
+    Comma, Dot, Minus, Plus, SemiColon, Slash, Star,
 
     // One or two character tokens.
-    BANG, BANGEQUAL,
-    EQUAL, EQUALEQUAL,
-    GREATER, GREATEREQUAL,
-    LESS, LESSEQUAL,
+    Bang, BangEqual,
+    Equal, EqualEqual,
+    Greater, GreaterEqual,
+    Less, LessEqual,
 
     // Literals.
-    IDENTIFIER, STRING, NUMBER,
+    Identifier, String, Number,
 
     // Keywords.
-    AND, CLASS, CONTRACT, ELSE, FALSE, FUNC, FOR, IF, NIL, OR,
-    PRINT, RETURN, SUPER, SELF, TRUE, LET, CONST, WHILE,
+    And, Class, Contract, Else, False, Func, For, If, Nil, Or,
+    Print, Return, Super, Self, True, Let, Const, While,
 
     EOF //End Of File
 }
