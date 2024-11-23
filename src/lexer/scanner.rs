@@ -39,42 +39,42 @@ impl Scanner {
     fn scan_token(&mut self) {
         let c = self.advance();
         match c {
-            '(' => self.add_token(TokenType::LPAREN),
-            ')' => self.add_token(TokenType::RPAREN),
-            '{' => self.add_token(TokenType::LBRACE),
-            '}' => self.add_token(TokenType::RBRACE),
-            ',' => self.add_token(TokenType::COMMA),
-            '.' => self.add_token(TokenType::DOT),
-            '-' => self.add_token(TokenType::MINUS),
-            '+' => self.add_token(TokenType::PLUS),
-            ';' => self.add_token(TokenType::SEMICOLON),
-            '*' => self.add_token(TokenType::STAR),
+            '(' => self.add_token(TokenType::LParen),
+            ')' => self.add_token(TokenType::RParen),
+            '{' => self.add_token(TokenType::LBrace),
+            '}' => self.add_token(TokenType::RBrace),
+            ',' => self.add_token(TokenType::Comma),
+            '.' => self.add_token(TokenType::Dot),
+            '-' => self.add_token(TokenType::Minus),
+            '+' => self.add_token(TokenType::Plus),
+            ';' => self.add_token(TokenType::SemiColon),
+            '*' => self.add_token(TokenType::Star),
             '!' => {
                 if self.match_char('=') {
-                    self.add_token(TokenType::BANGEQUAL);
+                    self.add_token(TokenType::BangEqual);
                 } else {
-                    self.add_token(TokenType::BANG);
+                    self.add_token(TokenType::Bang);
                 }
             }
             '=' => {
                 if self.match_char('=') {
-                    self.add_token(TokenType::EQUALEQUAL);
+                    self.add_token(TokenType::EqualEqual);
                 } else {
-                    self.add_token(TokenType::EQUAL);
+                    self.add_token(TokenType::Equal);
                 }
             }
             '<' => {
                 if self.match_char('=') {
-                    self.add_token(TokenType::LESSEQUAL);
+                    self.add_token(TokenType::LessEqual);
                 } else {
-                    self.add_token(TokenType::LESS);
+                    self.add_token(TokenType::Less);
                 }
             }
             '>' => {
                 if self.match_char('=') {
-                    self.add_token(TokenType::GREATEREQUAL);
+                    self.add_token(TokenType::GreaterEqual);
                 } else {
-                    self.add_token(TokenType::GREATER);
+                    self.add_token(TokenType::Greater);
                 }
             }
             '/' => {
@@ -83,16 +83,21 @@ impl Scanner {
                 } else if self.match_char('*') {
                     self.multi_line_comment();
                 } else {
-                    self.add_token(TokenType::SLASH);
+                    self.add_token(TokenType::Slash);
                 }
             }
             ' ' | '\r' | '\t' => {} // Ignore whitespace
             '\n' => self.line += 1, // Handle line breaks
             '"' => self.string(),
+            'o' => {
+                if self.match_char('r') {
+                    self.add_token(TokenType::Or);
+                }
+            }
             _ => {
-                if c.is_digit(10) {
+                if Scanner::is_digit(c) {
                     self.number();
-                } else if c.is_alphabetic() || c == '_' {
+                } else if Scanner::is_alpha(c) {
                     self.identifier();
                 } else {
                     self.error(&format!("Unexpected character: {}", c));
@@ -123,6 +128,18 @@ impl Scanner {
 
     fn add_token(&mut self, token_type: TokenType) {
         self.add_token_with_value(token_type, None);
+    }
+
+    fn is_digit(c: char) -> bool {
+        return c >= '0' && c <= '9';
+    }
+
+    fn is_alpha(c: char) -> bool {
+        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_';
+    }
+
+    fn is_alpha_numeric(c: char) -> bool {
+        return Scanner::is_alpha(c) || Scanner::is_digit(c);
     }
     
     fn error(&mut self, message: &str) {
@@ -168,58 +185,59 @@ impl Scanner {
     
         self.advance(); // Consume closing "
         let value = self.source[self.start + 1..self.current - 1].to_string();
-        self.add_token_with_value(TokenType::STRING, Some(value));
+        self.add_token_with_value(TokenType::String, Some(value));
     }
     
     fn number(&mut self) {
-        while self.peek().is_digit(10) {
+        while Scanner::is_digit(self.peek()) {
             self.advance();
         }
     
         // Look for fractional part
-        if self.peek() == '.' && self.peek_next().is_digit(10) {
+        if self.peek() == '.' && Scanner::is_digit(self.peek_next()) {
             self.advance(); // Consume '.'
     
-            while self.peek().is_digit(10) {
+            while Scanner::is_digit(self.peek()) {
                 self.advance();
             }
         }
     
         let value = self.source[self.start..self.current].to_string();
-        self.add_token_with_value(TokenType::NUMBER, Some(value));
+        self.add_token_with_value(TokenType::Number, Some(value));
     }
     
     fn identifier(&mut self) {
-        while self.peek().is_alphanumeric() || self.peek() == '_' {
+        while Scanner::is_alpha_numeric(self.peek()) || self.peek() == '_' {
             self.advance();
         }
 
         let text = self.source[self.start..self.current].to_string();
-        let token_type = self.keyword_or_identifier(&text);
+        let token_type = self.keywords(&text);
         self.add_token(token_type);
     }
 
-    fn keyword_or_identifier(&self, text: &str) -> TokenType {
+    fn keywords(&self, text: &str) -> TokenType {
         match text {
-            "and" => TokenType::AND,
-            "class" => TokenType::CLASS,
-            "contract" => TokenType::CONTRACT,
-            "else" => TokenType::ELSE,
-            "false" => TokenType::FALSE,
-            "func" => TokenType::FUNC,
-            "for" => TokenType::FOR,
-            "if" => TokenType::IF,
-            "nil" => TokenType::NIL,
-            "or" => TokenType::OR,
-            "print" => TokenType::PRINT,
-            "return" => TokenType::RETURN,
-            "super" => TokenType::SUPER,
+            "and" => TokenType::And,
+            "class" => TokenType::Class,
+            "contract" => TokenType::Contract,
+            "else" => TokenType::Else,
+            "false" => TokenType::False,
+            "func" => TokenType:: Func,
+            "for" => TokenType::For,
+            "if" => TokenType::If,
+            "nil" => TokenType::Nil,
+            "or" => TokenType::Or,
+            "print" => TokenType::Print,
+            "return" => TokenType::Return,
+            "super" => TokenType::Super,
             "self" => TokenType::SELF,
-            "true" => TokenType::TRUE,
-            "let" => TokenType::LET,
-            "const" => TokenType::CONST,
-            "while" => TokenType::WHILE,
-            _ => TokenType::IDENTIFIER,
+            "true" => TokenType::True,
+            "let" => TokenType::Let,
+            "const" => TokenType::Const,
+            "while" => TokenType::While,
+            "init" => TokenType::Init,
+            _ => TokenType::Identifier,
         }
     }
 
