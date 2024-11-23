@@ -4,11 +4,16 @@ use lexer::scanner::Scanner;
 
 fn main() {
     let source = "
-        const x = 10;
-        if (x > 5) {
-            print(x);
-        } else {
-            print(1);
+        contract Token {
+            init {
+                total_supply: unit;
+            }
+
+            func new (total_supply): Self {
+                Token {
+                    total_supply: total_supply;
+                }
+            }
         }
     ".to_string();
 

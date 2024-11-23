@@ -95,9 +95,9 @@ impl Scanner {
                 }
             }
             _ => {
-                if self.is_digit(c) {
+                if Scanner::is_digit(c) {
                     self.number();
-                } else if self.is_alpha(c) {
+                } else if Scanner::is_alpha(c) {
                     self.identifier();
                 } else {
                     self.error(&format!("Unexpected character: {}", c));
@@ -130,16 +130,16 @@ impl Scanner {
         self.add_token_with_value(token_type, None);
     }
 
-    fn is_digit(c: char) -> boolean {
+    fn is_digit(c: char) -> bool {
         return c >= '0' && c <= '9';
     }
 
-    fn is_alpha(c: char) -> boolean {
+    fn is_alpha(c: char) -> bool {
         return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_';
     }
 
-    fn is_alpha_numeric(c: char) {
-        return self.is_alpha(c) || self.is_digit(c);
+    fn is_alpha_numeric(c: char) -> bool {
+        return Scanner::is_alpha(c) || Scanner::is_digit(c);
     }
     
     fn error(&mut self, message: &str) {
@@ -189,15 +189,15 @@ impl Scanner {
     }
     
     fn number(&mut self) {
-        while self.is_digit(self.peek()) {
+        while Scanner::is_digit(self.peek()) {
             self.advance();
         }
     
         // Look for fractional part
-        if self.peek() == '.' && self.is_digit(self.peek_next()) {
+        if self.peek() == '.' && Scanner::is_digit(self.peek_next()) {
             self.advance(); // Consume '.'
     
-            while self.is_digit(self.peek()) {
+            while Scanner::is_digit(self.peek()) {
                 self.advance();
             }
         }
@@ -207,16 +207,16 @@ impl Scanner {
     }
     
     fn identifier(&mut self) {
-        while self.is_alpha_numeric(self.peek()) || self.peek() == '_' {
+        while Scanner::is_alpha_numeric(self.peek()) || self.peek() == '_' {
             self.advance();
         }
 
         let text = self.source[self.start..self.current].to_string();
-        let token_type = self.keyword_or_identifier(&text);
+        let token_type = self.keywords(&text);
         self.add_token(token_type);
     }
 
-    fn keyword_or_identifier(&self, text: &str) -> TokenType {
+    fn keywords(&self, text: &str) -> TokenType {
         match text {
             "and" => TokenType::And,
             "class" => TokenType::Class,
@@ -231,11 +231,12 @@ impl Scanner {
             "print" => TokenType::Print,
             "return" => TokenType::Return,
             "super" => TokenType::Super,
-            "self" => TokenType::Self,
+            "self" => TokenType::SELF,
             "true" => TokenType::True,
             "let" => TokenType::Let,
             "const" => TokenType::Const,
             "while" => TokenType::While,
+            "init" => TokenType::Init,
             _ => TokenType::Identifier,
         }
     }

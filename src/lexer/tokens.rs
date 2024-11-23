@@ -1,5 +1,5 @@
+#![allow(dead_code)]
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
-
 pub enum TokenType {
     // Single-character tokens.
     LParen, RParen, LBrace, RBrace,
@@ -15,8 +15,8 @@ pub enum TokenType {
     Identifier, String, Number,
 
     // Keywords.
-    And, Class, Contract, Else, False, Func, For, If, Nil, Or,
-    Print, Return, Super, Self, True, Let, Const, While,
+    And, Class, Contract, Else, False, Func, For, If, Nil, Or, Init,  
+    Print, Return, Super, SELF, True, Let, Const, While,
 
     EOF //End Of File
 }
