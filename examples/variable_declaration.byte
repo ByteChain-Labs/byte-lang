@@ -1,8 +1,7 @@
 //let is used to declare variables that are allowed to changed, variables are immutable by default
-let mut score: int = -1;
+let score: int = -1;
 
-// makes a variable mutable
-let mut num: uint = 4;
+let num: uint = 4;
 
 //const is used to declare variables that are not allowed to changed
 const num: uint = 4;

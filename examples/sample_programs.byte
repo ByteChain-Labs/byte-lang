@@ -1,4 +1,4 @@
-import "std.math" as Maths;
+import "math" as Maths;
 
 //Some sample programs
 
@@ -23,7 +23,7 @@ public struct User {
     private activeEmail: string;
 
     // Constructor to initialize the User with a username and email
-    public func new(string uname, string email): User {
+    public func new(uname: string, email: string): Self {
         return User {
             username: uname,
             activeEmail: email
@@ -36,20 +36,12 @@ public struct User {
     }
 
     // Setter for the active email
-    public func setActiveEmail(string email): nil {
+    public func setActiveEmail(email: string): nil {
         self.activeEmail = email;
     }
 
     // Method to display user information
     public func displayUserInfo(): nil {
-        print(`Username: {self.username}, Email: {self.activeEmail}`);
+        print("Username: {self.username}, \nEmail: {self.activeEmail}");
     }
-}
-
-// Example of creating a User and using the methods
-func main(): nil {
-    let user = User.new("johnDoe", "john@example.com");
-    user.displayUserInfo();
-    user.setActiveEmail("newemail@example.com");
-    user.displayUserInfo();
 }

@@ -1,0 +1,9 @@
+import User from "sample_programs"
+
+// Example of creating a User and using the methods
+func main(): nil {
+    let user = User.new("johnDoe", "john@example.com");
+    user.displayUserInfo();
+    user.setActiveEmail("newemail@example.com");
+    user.displayUserInfo();
+}
