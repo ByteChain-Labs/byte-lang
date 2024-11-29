@@ -1,11 +1,16 @@
 contract Token {
-    props {
-        total_supply: unit;
-    }
+    token_name: string;
+    total_supply: uint;
 
-    func new (total_supply): Self {
-        Token {
+    func new(token_name: string, total_supply: uint): Self {
+        return Token {
             total_supply: total_supply;
-        }
+            token_name: token_name;
+        };
     }
 }
+
+const new_contract = Token.new(dami_sama, 1000000)
+
+print(new_contract.token_name)
+print(new_contract.total_supply)

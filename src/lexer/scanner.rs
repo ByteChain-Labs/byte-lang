@@ -231,12 +231,14 @@ impl Scanner {
             "print" => TokenType::Print,
             "return" => TokenType::Return,
             "super" => TokenType::Super,
-            "self" => TokenType::SELF,
+            "Self" => TokenType::SelfUpper,
+            "self" => TokenType::SelfLower,
             "true" => TokenType::True,
             "let" => TokenType::Let,
             "const" => TokenType::Const,
             "while" => TokenType::While,
-            "init" => TokenType::Init,
+            "import" => TokenType::Import,
+            "from" => TokenType::From,
             _ => TokenType::Identifier,
         }
     }
